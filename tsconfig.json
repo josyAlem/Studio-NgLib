@@ -17,9 +17,9 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "paths": {
-      "shared": [
-        "dist/shared/shared",
-        "dist/shared"
+      "studio-auth": [
+        "dist/studio-auth/studio-auth",
+        "dist/studio-auth"
       ]
     },
     "target": "es2017",

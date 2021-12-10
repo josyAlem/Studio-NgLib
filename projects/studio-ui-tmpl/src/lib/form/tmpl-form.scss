@@ -1,0 +1,24 @@
+ .tmpl-form-validation-help-block{
+  color:red;
+  font-size: 12px;
+   }
+
+  //  .example-container .mat-form-field + .mat-form-field {
+  //   margin-left: 8px;
+  // }
+
+  .tmpl-form-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: start;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    }
+    .tmpl-form-item{
+      padding: 5px;
+      width: 250px;
+    }
+    .tmpl-form-submit{
+      width:150px;
+    }

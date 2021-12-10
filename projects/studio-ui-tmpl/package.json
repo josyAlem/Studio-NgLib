@@ -1,0 +1,27 @@
+{
+  "name": "studio-ui-tmpl",
+  "version": "0.0.1",
+  "description": "A ui template package from Studio-NgLib!",
+  "author": "Yoseph Alem",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/josyAlem/Studio-NgLib.git"
+  },
+  "bugs": {
+    "url": "https://github.com/josyAlem/Studio-NgLib/issues"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0",
+    "@angular/cdk": "^13.1.0",
+    "@angular/material": "^13.1.0",
+    "underscore": "^1.13.1"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/underscore": "^1.11.4"
+  }
+}

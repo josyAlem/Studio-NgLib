@@ -20,6 +20,10 @@
       "studio-auth": [
         "dist/studio-auth/studio-auth",
         "dist/studio-auth"
+      ],
+      "studio-ui-tmpl": [
+        "dist/studio-ui-tmpl/studio-ui-tmpl",
+        "dist/studio-ui-tmpl"
       ]
     },
     "target": "es2017",
@@ -33,7 +37,6 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
-    "enableIvy": false
+    "strictTemplates": true
   }
 }

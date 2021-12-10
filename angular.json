@@ -126,6 +126,37 @@
           }
         }
       }
+    },
+    "studio-ui-tmpl": {
+      "projectType": "library",
+      "root": "projects/studio-ui-tmpl",
+      "sourceRoot": "projects/studio-ui-tmpl/src",
+      "prefix": "StudioUi",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/studio-ui-tmpl/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/studio-ui-tmpl/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/studio-ui-tmpl/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/studio-ui-tmpl/src/test.ts",
+            "tsConfig": "projects/studio-ui-tmpl/tsconfig.spec.json",
+            "karmaConfig": "projects/studio-ui-tmpl/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "Sutdio-NgLib"

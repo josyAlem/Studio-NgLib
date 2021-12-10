@@ -1,9 +1,9 @@
 import { MatTableDataSource } from "@angular/material/table";
 
-declare namespace shared {
+export namespace shared {
 
 
-  interface INavigationObject {
+  export interface INavigationObject {
     id: string,
     title: string,
     route: string,
@@ -12,7 +12,7 @@ declare namespace shared {
     isDefaultPath: boolean
   }
 
-  interface IDataModelField {
+  export interface IDataModelField {
     name: string,
     label: string,
     controlType: string,
@@ -22,30 +22,30 @@ declare namespace shared {
     disabled?: boolean,
     width?: string
   }
-  interface IDataModelColumn {
+  export interface IDataModelColumn {
     field: string,
     header: string,
     isViewDetailLink?: boolean,
     styleClass?: string,
     sticky?: boolean
   }
-  interface IDataModelValidator {
+  export interface IDataModelValidator {
     name: string,
     validationRule?: any[]
   }
-  interface IDataModel {
+  export interface IDataModel {
     fields: IDataModelField[],
     columns: IDataModelColumn[],
     validators?: IDataModelValidator[]
   }
-  interface IContextMenu {
+  export interface IContextMenu {
     id?: string,
     label?: string;
     icon?: string;
     disabled?: boolean,
     command?: (ctxMenuId?: string, data?: any) => void
   }
-  interface IDataTable {
+  export interface IDataTable {
     tableCaption?: string,
     rows: MatTableDataSource<any>,
     columns: IDataModelColumn[],

@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TmplDataGridComponent } from './data-grid/tmpl-grid';
-import { TmplFormComponent } from './form/tmpl-form';
-import { SharedFilterPipe } from "./pipes/shared-filter.pipe";
+import { StudioUiFilterPipe } from "./pipes/pipes.index";
 import { StudioAngularMaterialModule } from './studio-angular-material.module';
+import { TmplDataGridComponent, TmplFormComponent } from './templates/templates.index';
 
 @NgModule({
     imports: [
@@ -16,11 +15,12 @@ import { StudioAngularMaterialModule } from './studio-angular-material.module';
     declarations: [
         TmplFormComponent,
         TmplDataGridComponent,
-        SharedFilterPipe],
+        StudioUiFilterPipe
+    ],
     exports: [
         TmplFormComponent,
         TmplDataGridComponent,
-        SharedFilterPipe
+        StudioUiFilterPipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

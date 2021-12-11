@@ -6,14 +6,14 @@ import {
 } from '@angular/forms';
 import { distinct } from 'rxjs/operators';
 import * as _ from 'underscore';
-import * as sharedEnums from '../enums';
-import { shared } from '../globals';
-import * as sharedStatics from '../statics';
+import * as sharedEnums from '../../utils/enums';
+import * as interfaces from '../../utils/interfaces';
+import * as sharedStatics from '../../utils/statics';
 
 @Component({
-  selector: 'tmpl-form',
+  selector: 'studio-ui-tmpl-form',
   template: `<form novalidate="novalidate" [formGroup]="_localDataForm" class="tmpl-form-container">
-  <div *ngFor="let field of _localDataModel.fields| sharedFilterPipe:filterFormField" >
+  <div *ngFor="let field of _localDataModel.fields| studioUiFilterPipe:filterFormField" >
       <div *ngIf="field.controlType==sharedFormCtrlType.INPUT">
           <mat-form-field appearance="outline"  class="tmpl-form-item">
               <mat-label>{{field.label}}</mat-label>
@@ -59,13 +59,13 @@ export class TmplFormComponent implements OnChanges, OnInit {
   @Output() submitForm: EventEmitter<JSON> = new EventEmitter<JSON>();
   @Input() formData: any;
   @Input() formSubmitType!: sharedEnums.formSubmitType;
-  @Input() dataModel!: shared.IDataModel;
+  @Input() dataModel!: interfaces.IDataModel;
   @Input() submitFormTitle!: string;
 
   _submitFormTitle: string = 'SAVE';
   _errMessage: string = '';
   _localDataForm!: FormGroup;
-  _localDataModel!: shared.IDataModel;
+  _localDataModel!: interfaces.IDataModel;
 
   sharedFormCtrlType: any;
   ngOnInit(): void {
@@ -105,7 +105,7 @@ export class TmplFormComponent implements OnChanges, OnInit {
     if (this.formData != null) this._localDataForm.patchValue(this.formData);
     else this._localDataForm.updateValueAndValidity();
   }
-  updateControlValueByType(fld: shared.IDataModelField, frmCtrl: FormControl) {
+  updateControlValueByType(fld: interfaces.IDataModelField, frmCtrl: FormControl) {
     frmCtrl.valueChanges.pipe(distinct()).subscribe((value) => {
       switch (fld.dataType) {
         case 'number': {
@@ -118,7 +118,7 @@ export class TmplFormComponent implements OnChanges, OnInit {
       }
     });
   }
-  setFormCtrlDefaultValue(fld: shared.IDataModelField): any {
+  setFormCtrlDefaultValue(fld: interfaces.IDataModelField): any {
     switch (fld.dataType) {
       case 'bool':
         return true;
@@ -138,7 +138,7 @@ export class TmplFormComponent implements OnChanges, OnInit {
     this.submitForm.emit(formValue);
   }
 
-  filterFormField(field: shared.IDataModelField) {
+  filterFormField(field: interfaces.IDataModelField) {
     return field.formView == true;
   }
 

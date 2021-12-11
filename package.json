@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:studio-auth": "ng build studio-auth --configuration production",
+    "build:studio-ui-tmpl": "ng build studio-ui-tmpl --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

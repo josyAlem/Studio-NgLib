@@ -16,10 +16,10 @@ import {
 } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'underscore';
-import { shared } from '../globals';
+import * as interfaces from '../../utils/interfaces';
 
 @Component({
-  selector: 'tmpl-grid',
+  selector: 'studio-ui-tmpl-grid',
   template: `
 
   <div >
@@ -133,7 +133,7 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
   @Output() onFieldClicked: EventEmitter<any> = new EventEmitter();
   selectedRowData!: SelectionModel<any>;
   showSearchRow: boolean = false;
-  localDataTable: shared.IDataTable = {
+  localDataTable: interfaces.IDataTable = {
     tableCaption: 'Sample Data Table',
     rows: new MatTableDataSource<any>(),
     columns: [],
@@ -145,7 +145,7 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
     pageSize: 10,
     totalRecords: 0,
   };
-  @Input() inputDataSource: shared.IDataTable = this.localDataTable;
+  @Input() inputDataSource: interfaces.IDataTable = this.localDataTable;
 
   expandedElement!: null;
   isLoadingResults: boolean = false;
@@ -170,7 +170,7 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
     if (!this.inputDataSource)
       return;
 
-    let modifiedColHeaders: shared.IDataModelColumn[] = _.map(
+    let modifiedColHeaders: interfaces.IDataModelColumn[] = _.map(
       this.inputDataSource.columns,
       function (c: any) {
         return c;

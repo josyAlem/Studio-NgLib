@@ -1,77 +1,47 @@
-<form
-  novalidate="novalidate"
-  [formGroup]="_localDataForm"
-  class="tmpl-form-container"
+<div
+  class="container {{_localDataModel.isCenteredForm? 'container-center':''}}"
+  style="max-width:{{_localDataModel.formSize}}"
 >
-  <div
-    *ngFor="let field of _localDataModel.fields| studioUiFilterPipe:filterFormField"
+  <form
+    novalidate="novalidate"
+    [formGroup]="_localDataForm"
+    class="form-container"
   >
-    <div *ngIf="field.controlType==sharedFormCtrlType.INPUT">
-      <mat-form-field appearance="outline" class="tmpl-form-item">
-        <mat-label>{{field.label}}</mat-label>
-        <input
-          matInput
-          type="{{field.type}}"
-          formControlName="{{field.name}}"
-          autocomplete="off"
-        />
-      </mat-form-field>
+    <div
+      *ngFor="let field of _localDataModel.fields| studioUiFilterPipe:filterFormField"
+    >
+      <div *ngIf="field.controlType==sharedFormCtrlType.INPUT">
+        <div class="field-container">
+          <div class="field-label">
+            <label for="{{field.name}}"
+              >{{field.label}}{{field.isRequired?'*':''}}</label
+            >
+          </div>
+          <div class="field-control">
+            <input type="{{field.type}}" formControlName="{{field.name}}" />
+          </div>
+        </div>
+      </div>
+      <div *ngIf="field.controlType==sharedFormCtrlType.TEXTAREA">
+        <div class="field-container">
+          <div class="field-label">
+            <label for="{{field.name}}">{{field.label}}</label>
+          </div>
+          <div class="field-control">
+            <textarea formControlName="{{field.name}}" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="error-block" *ngIf="validateForm(field.name)">
+          {{_validationMsg}}
+        </span>
+      </div>
     </div>
-    <div *ngIf="field.controlType==sharedFormCtrlType.DATEPICKER">
-      <mat-form-field appearance="outline" class="tmpl-form-item">
-        <mat-label>{{field.label}}</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          formControlName="{{field.name}}"
-          autocomplete="off"
-        />
-        <mat-datepicker-toggle
-          matSuffix="matSuffix"
-          [for]="picker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
-    <div *ngIf="field.controlType==sharedFormCtrlType.CHECKBOX">
-      <mat-form-field appearance="outline" class="tmpl-form-item">
-        <mat-checkbox
-          class="example-margin"
-          [(ngModel)]="field.name"
-          formControlName="{{field.name}}"
-          >{{field.label}}</mat-checkbox
-        >
-      </mat-form-field>
-    </div>
-    <div *ngIf="field.controlType==sharedFormCtrlType.TEXTAREA">
-      <mat-form-field appearance="outline" class="tmpl-form-item">
-        <mat-label>{{field.label}}</mat-label>
-        <textarea
-          matInput
-          clearInput="true"
-          formControlName="{{field.name}}"
-          autocomplete="off"
-        ></textarea>
-      </mat-form-field>
-    </div>
-    <div>
-      <span
-        class="tmpl-form-validation-help-block"
-        *ngIf="validateForm(field.name)"
-      >
-        {{_errMessage}}
-      </span>
-    </div>
+  </form>
+  <div class="form-button">
+    <button (click)="formSubmit()" [disabled]="!_localDataForm.valid">
+      {{_submitFormTitle}}
+    </button>
   </div>
-</form>
-<div>
-  <button
-    mat-raised-button="mat-raised-button"
-    class="tmpl-form-submit"
-    color="primary"
-    (click)="formSubmit()"
-    [disabled]="!_localDataForm.valid"
-  >
-    {{_submitFormTitle}}
-  </button>
 </div>

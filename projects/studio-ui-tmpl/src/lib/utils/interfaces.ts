@@ -15,6 +15,7 @@ export interface IDataModelField {
   controlType: string,
   dataType: string,
   type: string,
+  isRequired?: boolean
   formView: boolean,
   disabled?: boolean,
   width?: string
@@ -33,7 +34,9 @@ export interface IDataModelValidator {
 export interface IDataModel {
   fields: IDataModelField[],
   columns: IDataModelColumn[],
-  validators?: IDataModelValidator[]
+  validators?: IDataModelValidator[],
+  formSize: string,
+  isCenteredForm: boolean
 }
 export interface IContextMenu {
   id?: string,

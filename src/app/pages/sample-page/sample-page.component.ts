@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { plainToClass } from 'class-transformer';
-import { formSubmitType, IDataModel, IDataTable } from 'studio-ui-tmpl';
 import * as _ from 'underscore';
 import { AppDataService } from '../../app-data/app-data.service';
+import { formSubmitType, IDataModel, IDataTable } from '../../lib/utils/utils.index';
 import { sampleRequestModel } from '../model/requestModel';
 @Component({
   selector: 'app-sample-page',
@@ -36,7 +36,7 @@ export class SamplePageComponent implements OnInit {
     });
   }
   initVariables() {
-    this.submitFormTitle = 'Get';
+    this.submitFormTitle = 'Sign Up';
     this.formData = {};
     this.formSubmitType = formSubmitType.NEW;
     this.dataModel = new sampleRequestModel().getDataModel();

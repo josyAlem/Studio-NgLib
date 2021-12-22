@@ -1,24 +1,70 @@
-.tmpl-form-validation-help-block {
+.container {
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+.container-center {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10%;
+}
+.container:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.error-block {
   color: red;
   font-size: 12px;
 }
-
-//  .example-container .mat-form-field + .mat-form-field {
-//   margin-left: 8px;
-// }
-
-.tmpl-form-container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+.field-label {
+  margin: 0 0 0 10px;
 }
-.tmpl-form-item {
+
+.field-control {
+  margin-top: 6px;
+}
+
+.field-control > * {
+  margin: 0px 10px 0px 10px;
   padding: 5px;
-  min-width: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
 }
-.tmpl-form-submit {
-  min-width: 2rem;
+.form-button {
+  display: inline-block;
+}
+.form-button > button {
+  background-color: #0069cc;
+  color: white;
+  height: 35px;
+  text-align: center;
+  padding: 0 10% 0 10%;
+  min-width: 100px;
+  margin: 6px 10px 0 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  float: left;
+}
+.form-button > button :disabled {
+  background-color: gray;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .field-label,
+  .field-control,
+  button {
+    width: 100%;
+  }
+  button {
+    margin-top: 6px;
+  }
 }

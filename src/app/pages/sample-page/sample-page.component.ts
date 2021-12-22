@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { plainToClass } from 'class-transformer';
 import * as _ from 'underscore';
 import { AppDataService } from '../../app-data/app-data.service';
+import { IDataTablePageChangeEvent } from '../../lib/utils/interfaces';
 import { formSubmitType, IDataModel, IDataTable } from '../../lib/utils/utils.index';
 import { sampleRequestModel } from '../model/requestModel';
 @Component({
@@ -22,7 +23,13 @@ export class SamplePageComponent implements OnInit {
   localDataSource: IDataTable = {
     tableCaption: 'Contacts',
     rows: [],
-    columns: []
+    columns: [],
+    selectableRows: true,
+    showPaginator: true,
+    showFilter: true,
+    pageSizeOptions: [5, 10, 20, 50, 100],
+    pageSize: 10,
+    totalRecords: 50,
   };
   errMsg: string = '';
 
@@ -51,9 +58,8 @@ export class SamplePageComponent implements OnInit {
   }
   reset() {
     this.errMsg = '';
-    this.localDataSource.columns = [];
-    this.localDataSource.rows = [];
-    this.dataSource = this.localDataSource;
+    this.formData = {};
+
   }
 
   generateTableSource(res: any) {
@@ -62,5 +68,8 @@ export class SamplePageComponent implements OnInit {
     this.localDataSource.rows = res;
     this.dataSource = this.localDataSource;
   }
+  loadPage(event: IDataTablePageChangeEvent) {
 
+    console.log(event);
+  }
 }

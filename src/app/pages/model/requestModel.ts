@@ -53,7 +53,8 @@ export class sampleRequestModel {
       });
 
       columns.push({
-        field: prop, header: prop.replace(/([A-Z])/g, ' $1')
+        field: prop,
+        header: prop.replace(/([A-Z])/g, ' $1')
           .replace(/^./, function (str) {
             return str.toUpperCase();
           })

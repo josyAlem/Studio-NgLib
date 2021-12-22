@@ -1,4 +1,3 @@
-import { MatTableDataSource } from "@angular/material/table";
 
 export interface INavigationObject {
   id: string,
@@ -47,7 +46,7 @@ export interface IContextMenu {
 }
 export interface IDataTable {
   tableCaption?: string,
-  rows: MatTableDataSource<any>,
+  rows: any[],
   columns: IDataModelColumn[],
   selectableRows?: boolean,
   expandContent?: string,

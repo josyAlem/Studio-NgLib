@@ -1,56 +1,88 @@
-
-
-<div >
-  <mat-spinner id="dataTableLoadingSpinner" *ngIf="isLoadingResults"></mat-spinner>
+<div>
+  <mat-spinner
+    id="dataTableLoadingSpinner"
+    *ngIf="isLoadingResults"
+  ></mat-spinner>
   <div *ngIf="showFilter">
     <mat-form-field appearance="standard">
       <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)">
-      </mat-form-field>
-    </div>
+      <input matInput (keyup)="applyFilter($event)" />
+    </mat-form-field>
+  </div>
 
-  <table class="mat-elevation-z8" mat-table *ngIf="!isLoadingResults" [dataSource]="localDataTable.rows" multiTemplateDataRows
-   matSort (matSortChange)="sortData($event)">
-   <caption> {{localDataTable.tableCaption}} </caption>
+  <table
+    class="mat-elevation-z8"
+    mat-table
+    *ngIf="!isLoadingResults"
+    [dataSource]="gridRows"
+    multiTemplateDataRows
+    matSort
+    (matSortChange)="sortData($event)"
+  >
+    <caption>
+      {{localDataTable.tableCaption}}
+    </caption>
 
-   <ng-container matColumnDef="select" sticky>
-      <th mat-header-cell *matHeaderCellDef >
-        <mat-checkbox (change)="onAllCheckboxChanged($event)" [checked]="selectedRowData.hasValue() && isAllSelected()"
-          [indeterminate]="selectedRowData.hasValue() && !isAllSelected()">
+    <ng-container matColumnDef="select" sticky>
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="onAllCheckboxChanged($event)"
+          [checked]="selectedRowData.hasValue() && isAllSelected()"
+          [indeterminate]="selectedRowData.hasValue() && !isAllSelected()"
+        >
         </mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="onRowCheckboxClicked($event)" (change)="onChangeRowSelection($event,row)"
-          [checked]="selectedRowData.isSelected(row)">
+        <mat-checkbox
+          (click)="onRowCheckboxClicked($event)"
+          (change)="onChangeRowSelection($event,row)"
+          [checked]="selectedRowData.isSelected(row)"
+        >
         </mat-checkbox>
       </td>
-      <td mat-footer-cell *matFooterCellDef > </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <ng-container matColumnDef="expand" sticky>
-      <th mat-header-cell *matHeaderCellDef > </th>
+      <th mat-header-cell *matHeaderCellDef></th>
 
       <td mat-cell *matCellDef="let row">
-        <mat-icon aria-hidden="false"  (click)="onViewExpandedContent(row)">{{row == expandedElement?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon>
+        <mat-icon aria-hidden="false" (click)="onViewExpandedContent(row)"
+          >{{row ==
+          expandedElement?'keyboard_arrow_up':'keyboard_arrow_down'}}</mat-icon
+        >
       </td>
-      <td mat-footer-cell *matFooterCellDef> </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
-    <ng-container *ngFor="let col of localDataTable.columns" [matColumnDef]="col.header" [sticky]="col.sticky">
-      <th mat-header-cell *matHeaderCellDef [mat-sort-header]="col.field" id="{{col.field}}"> {{col.header}} </th>
+    <ng-container
+      *ngFor="let col of localDataTable.columns"
+      [matColumnDef]="col.header"
+      [sticky]="col.sticky"
+    >
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        [mat-sort-header]="col.field"
+        id="{{col.field}}"
+      >
+        {{col.header}}
+      </th>
       <td mat-cell *matCellDef="let row">
-
         <span *ngIf="!col.isViewDetailLink"> {{row[col.field]}}</span>
 
-        <a *ngIf="col.isViewDetailLink" (click)="onViewDetail(col.field,row)" style="cursor:pointer">
+        <a
+          *ngIf="col.isViewDetailLink"
+          (click)="onViewDetail(col.field,row)"
+          style="cursor: pointer"
+        >
           {{row[col.field]}}
         </a>
-
       </td>
-      <td mat-footer-cell *matFooterCellDef> </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
-    <ng-container matColumnDef="ctxMenu" stickyEnd >
+    <ng-container matColumnDef="ctxMenu" stickyEnd>
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
         <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -58,10 +90,13 @@
         </button>
         <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
           <ng-template matMenuContent>
-            <button *ngFor="let bt of localDataTable.contextMenu" mat-menu-item [disabled]="bt.disabled"
+            <button
+              *ngFor="let bt of localDataTable.contextMenu"
+              mat-menu-item
+              [disabled]="bt.disabled"
             >
-            <!-- (click)="bt.command(bt.id,row)" -->
-          <mat-icon aria-hidden="false">{{bt.icon}}</mat-icon>
+              <!-- (click)="bt.command(bt.id,row)" -->
+              <mat-icon aria-hidden="false">{{bt.icon}}</mat-icon>
               <span> {{bt.label}}</span>
             </button>
           </ng-template>
@@ -72,23 +107,43 @@
 
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedContentId">
-      <td mat-cell *matCellDef="let row" [attr.colspan]="tableColHeaders.length">
-        <div class="grid-element-detail" [@detailExpandTrigger]="row == expandedElement ? 'expanded' : 'collapsed'">
+      <td
+        mat-cell
+        *matCellDef="let row"
+        [attr.colspan]="tableColHeaders.length"
+      >
+        <div
+          class="grid-element-detail"
+          [@detailExpandTrigger]="row == expandedElement ? 'expanded' : 'collapsed'"
+        >
           <div [innerHTML]="localDataTable.expandContent"></div>
         </div>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="tableColHeaders; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: tableColHeaders;" class="grid-element-row"
-      [class.grid-expanded-row]="expandedElement === row"> </tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: tableColHeaders;"
+      class="grid-element-row"
+      [class.grid-expanded-row]="expandedElement === row"
+    ></tr>
 
-    <tr mat-row *matRowDef="let row; columns: ['expandedContentId']" class="grid-detail-row"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedContentId']"
+      class="grid-detail-row"
+    ></tr>
     <tr mat-footer-row *matFooterRowDef="tableColHeaders; sticky: true"></tr>
-
   </table>
 
-  <mat-paginator *ngIf="showPaginator" (page)="onPageChanged($event)" [pageSize]="localDataTable.pageSize" [length]="localDataTable.totalRecords" [pageSizeOptions]="localDataTable.pageSizeOptions|| []" showFirstLastButtons>
-
+  <mat-paginator
+    *ngIf="showPaginator"
+    (page)="onPageChanged($event)"
+    [pageSize]="localDataTable.pageSize"
+    [length]="localDataTable.totalRecords"
+    [pageSizeOptions]="localDataTable.pageSizeOptions|| []"
+    showFirstLastButtons
+  >
   </mat-paginator>
 </div>

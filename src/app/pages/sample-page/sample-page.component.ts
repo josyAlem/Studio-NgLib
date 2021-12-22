@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { plainToClass } from 'class-transformer';
 import * as _ from 'underscore';
 import { AppDataService } from '../../app-data/app-data.service';
@@ -22,7 +21,7 @@ export class SamplePageComponent implements OnInit {
   dataSource!: IDataTable;
   localDataSource: IDataTable = {
     tableCaption: 'Contacts',
-    rows: new MatTableDataSource<any>(),
+    rows: [],
     columns: []
   };
   errMsg: string = '';
@@ -53,14 +52,14 @@ export class SamplePageComponent implements OnInit {
   reset() {
     this.errMsg = '';
     this.localDataSource.columns = [];
-    this.localDataSource.rows = new MatTableDataSource<any>();
+    this.localDataSource.rows = [];
     this.dataSource = this.localDataSource;
   }
 
   generateTableSource(res: any) {
     //let columns: IDataModelColumn[] = generateDataColumnFromModel(res[0], 3);
     this.localDataSource.columns = this.dataModel.columns;
-    this.localDataSource.rows = new MatTableDataSource<any>(res);
+    this.localDataSource.rows = res;
     this.dataSource = this.localDataSource;
   }
 

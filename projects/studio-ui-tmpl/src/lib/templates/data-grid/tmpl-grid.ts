@@ -36,7 +36,7 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
   showSearchRow: boolean = false;
   localDataTable: interfaces.IDataTable = {
     tableCaption: 'Sample Data Table',
-    rows: new MatTableDataSource<any>(),
+    rows: [],
     columns: [],
     selectableRows: true,
     expandContent: '',
@@ -53,6 +53,7 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
   showFilter?: boolean = false;
   tableColHeaders!: string[];
   showPaginator?: boolean = false;
+  gridRows: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort = new MatSort();
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
@@ -111,8 +112,9 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
     this.localDataTable = this.inputDataSource;
     this.showPaginator = this.inputDataSource.showPaginator;
     this.showFilter = this.inputDataSource.showFilter;
+    this.inputDataSource.rows.forEach(c => this.gridRows.data.push(c));
 
-    this.localDataTable.rows.sort = this.sort;
+    this.gridRows.sort = this.sort;
     if (this.localDataTable.showPaginator) {
       if (this.localDataTable.pageSizeOptions == null || [])
         this.localDataTable.pageSizeOptions = [
@@ -120,17 +122,17 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
         ];
       if (this.localDataTable.totalRecords == null)
         this.localDataTable.totalRecords =
-          this.localDataTable.rows.data.length;
+          this.gridRows.data.length;
       if (this.localDataTable.pageSize == null)
         this.localDataTable.pageSize = 5;
 
-      this.localDataTable.rows.paginator = this.paginator;
+      this.gridRows.paginator = this.paginator;
 
     }
   }
 
   sortData(event: Sort) {
-    this.localDataTable.rows.sort?.sort({
+    this.gridRows.sort?.sort({
       id: event.active,
       start: event.direction,
     } as MatSortable);
@@ -138,13 +140,13 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.localDataTable.rows.filter = filterValue.trim().toLowerCase();
+    this.gridRows.filter = filterValue.trim().toLowerCase();
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selectedRowData.selected.length;
-    const numRows = this.localDataTable.rows.data.length;
+    const numRows = this.gridRows.data.length;
     return numSelected === numRows;
   }
 
@@ -152,7 +154,7 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
   masterToggle() {
     this.isAllSelected()
       ? this.selectedRowData.clear()
-      : this.localDataTable.rows.data.forEach((row) =>
+      : this.gridRows.data.forEach((row) =>
         this.selectedRowData.select(row)
       );
   }

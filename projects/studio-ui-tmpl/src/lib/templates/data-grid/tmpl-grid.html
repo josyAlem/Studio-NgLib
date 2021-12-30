@@ -3,10 +3,10 @@
     id="dataTableLoadingSpinner"
     *ngIf="isLoadingResults"
   ></mat-spinner>
-  <div *ngIf="showFilter">
+  <div *ngIf="localDataTable.showFilter">
     <mat-form-field appearance="standard">
       <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" />
+      <input matInput (keyup)="filterData($event)" />
     </mat-form-field>
   </div>
 
@@ -14,7 +14,7 @@
     class="mat-elevation-z8"
     mat-table
     *ngIf="!isLoadingResults"
-    [dataSource]="gridRows"
+    [dataSource]="gridRows.filteredData"
     multiTemplateDataRows
     matSort
     (matSortChange)="sortData($event)"
@@ -138,7 +138,7 @@
   </table>
 
   <mat-paginator
-    *ngIf="showPaginator"
+    *ngIf="localDataTable.showPaginator"
     (page)="onPageChanged($event)"
     [pageSize]="localDataTable.pageSize"
     [length]="localDataTable.totalRecords"

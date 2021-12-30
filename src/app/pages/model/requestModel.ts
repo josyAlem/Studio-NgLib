@@ -7,8 +7,8 @@ export class sampleRequestModel {
     public city?: string,
     public birthdate?: Date,
     public children?: number,
-    public comment?: string,
     public isMarried?: boolean,
+    public comment?: string,
   ) { }
 
   getDataModel(): IDataModel {
@@ -50,6 +50,7 @@ export class sampleRequestModel {
         controlType: controlType,
         formView: true,
         type: type,
+        placeholder: "Enter a value"
       });
 
       columns.push({

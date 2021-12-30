@@ -17,7 +17,8 @@ export interface IDataModelField {
   isRequired?: boolean
   formView: boolean,
   disabled?: boolean,
-  width?: string
+  width?: string,
+  placeholder?: string
 }
 export interface IDataModelColumn {
   field: string,
@@ -57,4 +58,11 @@ export interface IDataTable {
   pageSize?: number,
   totalRecords?: number
 
+}
+
+export interface IDataTablePageChangeEvent {
+  previousPageIndex: number,
+  pageIndex: number,
+  pageSize: number,
+  length: number
 }

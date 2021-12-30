@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'underscore';
 import * as interfaces from '../../utils/interfaces';
 
+
 @Component({
   selector: 'studio-ui-tmpl-grid',
   templateUrl: './tmpl-grid.html',
@@ -29,11 +30,11 @@ import * as interfaces from '../../utils/interfaces';
   ],
 })
 export class TmplDataGridComponent implements OnChanges, OnInit {
+  @Output() onLoadPage: EventEmitter<interfaces.IDataTablePageChangeEvent> = new EventEmitter();
   @Output() onRowSelected: EventEmitter<any> = new EventEmitter();
   @Output() onRowUnselected: EventEmitter<any> = new EventEmitter();
   @Output() onFieldClicked: EventEmitter<any> = new EventEmitter();
-  selectedRowData!: SelectionModel<any>;
-  showSearchRow: boolean = false;
+
   localDataTable: interfaces.IDataTable = {
     tableCaption: 'Sample Data Table',
     rows: [],
@@ -41,18 +42,18 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
     selectableRows: true,
     expandContent: '',
     contextMenu: [],
-    showPaginator: true,
+    showPaginator: false,
+    showFilter: false,
     pageSizeOptions: [5, 10, 20, 50, 100],
     pageSize: 10,
     totalRecords: 0,
   };
   @Input() inputDataSource: interfaces.IDataTable = this.localDataTable;
 
+  selectedRowData!: SelectionModel<any>;
   expandedElement!: null;
   isLoadingResults: boolean = false;
-  showFilter?: boolean = false;
   tableColHeaders!: string[];
-  showPaginator?: boolean = false;
   gridRows: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort = new MatSort();
@@ -110,8 +111,8 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
 
     this.tableColHeaders = _.pluck(modifiedColHeaders, 'header');
     this.localDataTable = this.inputDataSource;
-    this.showPaginator = this.inputDataSource.showPaginator;
-    this.showFilter = this.inputDataSource.showFilter;
+    //this.showPaginator = this.inputDataSource.showPaginator;
+    //this.showFilter = this.inputDataSource.showFilter;
     this.inputDataSource.rows.forEach(c => this.gridRows.data.push(c));
 
     this.gridRows.sort = this.sort;
@@ -138,11 +139,12 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
     } as MatSortable);
   }
 
-  applyFilter(event: Event) {
+  filterData(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.gridRows.filter = filterValue.trim().toLowerCase();
+    this.gridRows.filter = filterValue;
   }
 
+  //#region Selctable Rows
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selectedRowData.selected.length;
@@ -177,8 +179,17 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
       }
     }
   }
+  //#endregion
+
   onPageChanged(event: any) {
-    console.log(event);
+    let pageData: interfaces.IDataTablePageChangeEvent = {
+      previousPageIndex: event.previousPageIndex,
+      length: event.length,
+      pageIndex: event.pageIndex,
+      pageSize: event.pageSize
+    };
+    this.onLoadPage.emit(pageData);
+    console.log('onPageChanged from template:' + event);
   }
 
   onViewDetail(field: string, rowData: any) {

@@ -17,7 +17,7 @@ import * as sharedStatics from '../../utils/statics';
 })
 export class TmplFormComponent implements OnChanges, OnInit {
   constructor() { }
-  @Output() submitForm: EventEmitter<JSON> = new EventEmitter<JSON>();
+  @Output() onFormSubmit: EventEmitter<JSON> = new EventEmitter<JSON>();
   @Input() formData: any;
   @Input() formSubmitType!: sharedEnums.formSubmitType;
   @Input() dataModel!: interfaces.IDataModel;
@@ -96,7 +96,7 @@ export class TmplFormComponent implements OnChanges, OnInit {
     console.log('Saved in template: ' + JSON.stringify(formValue));
     if (!this._localDataForm.valid) return;
 
-    this.submitForm.emit(formValue);
+    this.onFormSubmit.emit(formValue);
   }
 
   filterFormField(field: interfaces.IDataModelField) {

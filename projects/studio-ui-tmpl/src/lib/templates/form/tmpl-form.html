@@ -18,7 +18,11 @@
             >
           </div>
           <div class="field-control">
-            <input type="{{field.type}}" formControlName="{{field.name}}" />
+            <input
+              type="{{field.type}}"
+              formControlName="{{field.name}}"
+              placeholder="{{field.placeholder}}"
+            />
           </div>
         </div>
       </div>
@@ -28,7 +32,11 @@
             <label for="{{field.name}}">{{field.label}}</label>
           </div>
           <div class="field-control">
-            <textarea formControlName="{{field.name}}" rows="3"></textarea>
+            <textarea
+              formControlName="{{field.name}}"
+              rows="3"
+              placeholder="{{field.placeholder}}"
+            ></textarea>
           </div>
         </div>
       </div>

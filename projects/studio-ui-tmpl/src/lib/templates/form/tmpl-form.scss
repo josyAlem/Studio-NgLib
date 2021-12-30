@@ -10,7 +10,13 @@
   margin-left: auto;
   margin-top: 10%;
 }
-
+div[class*="container-center"] .field-control > *,
+div[class*="container-center"] .form-button > button {
+  width: 95%;
+}
+div[class*="container-center"] .form-container {
+  flex-flow: column wrap;
+}
 .form-container {
   display: flex;
   flex-flow: row wrap;
@@ -78,6 +84,6 @@
   }
   .field-control > *,
   .form-button > button {
-    width: 100%;
+    width: 95%;
   }
 }

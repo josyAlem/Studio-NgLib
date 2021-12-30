@@ -1,3 +1,4 @@
+import { FormCtrlType } from './statics';
 
 export interface INavigationObject {
   id: string,
@@ -11,9 +12,9 @@ export interface INavigationObject {
 export interface IDataModelField {
   name: string,
   label: string,
-  controlType: string,
-  dataType: string,
-  type: string,
+  controlType: typeof FormCtrlType,
+  dataType: "number" | "string" | "date" | "boolean",
+  type: "number" | "email" | "date" | "text" | "checkbox" | "password",
   isRequired?: boolean
   formView: boolean,
   disabled?: boolean,

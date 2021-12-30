@@ -1,14 +1,15 @@
 import { Validators } from '@angular/forms';
-import { IDataModel, IDataModelColumn, IDataModelField, IDataModelValidator } from '../../lib/utils/utils.index';
+import { FormCtrlType, IDataModel, IDataModelColumn, IDataModelField, IDataModelValidator } from '../../lib/utils/utils.index';
 export class sampleRequestModel {
   constructor(
     public name: string = "",
     public email?: string,
-    public city?: string,
-    public birthdate?: Date,
-    public children?: number,
-    public isMarried?: boolean,
-    public comment?: string,
+    public password?: string,
+    // public city?: string,
+    // public birthdate?: Date,
+    // public children?: number,
+    // public isMarried?: boolean,
+    // public comment?: string,
   ) { }
 
   getDataModel(): IDataModel {
@@ -18,15 +19,18 @@ export class sampleRequestModel {
 
     Object.entries(this).forEach(([key, value]) => {
       let prop: string = key;
-      let dataType: string = "string";
-      let type: string = "text";
-      let controlType: string = "input";
+      let dataType: any = "string";
+      let type: any = "text";
+      let controlType: any = FormCtrlType.INPUT;
       if (prop == 'birthdate') {
         dataType = 'date';
         type = 'date'
       }
       if (prop == 'email') {
         type = 'email'
+      }
+      if (prop == 'password') {
+        type = 'password'
       }
       if (prop == 'isMarried') {
         dataType = 'boolean';
@@ -37,7 +41,7 @@ export class sampleRequestModel {
         type = 'number'
       }
       if (prop == 'comment') {
-        controlType = 'textarea';
+        controlType = FormCtrlType.TEXTAREA;
       }
 
       fields.push({
@@ -76,6 +80,17 @@ export class sampleRequestModel {
           validationRule: [
             Validators.required,
             Validators.email
+          ],
+        });
+      }
+      if (prop == 'password') {
+        validators.push({
+          name: prop,
+          validationRule: [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(9)
+
           ],
         });
       }

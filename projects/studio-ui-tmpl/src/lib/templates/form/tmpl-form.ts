@@ -83,8 +83,6 @@ export class TmplFormComponent implements OnChanges, OnInit {
     switch (fld.dataType) {
       case 'boolean':
         return false;
-      case 'select':
-        return null;
       default:
         return null;
     }
@@ -138,6 +136,7 @@ export class TmplFormComponent implements OnChanges, OnInit {
     else if (error['numRange']) {
       errMessage = error['numRange'].message;
     }
+    else { errMessage = JSON.stringify(error); }
     return errMessage;
   }
 }

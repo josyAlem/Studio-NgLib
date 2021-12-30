@@ -1,7 +1,4 @@
 import { Injectable } from "@angular/core";
-import { plainToClass } from "class-transformer";
-import { map } from "rxjs/operators";
-import { Contact2 } from '../pages/model/responseModel';
 import { AppDataResource } from "./app-data.resource";
 
 
@@ -17,17 +14,17 @@ export class AppDataService {
   }
 
   loadContactData() {
-    return this._dataSrc.getAll("api/contacts")
-      .pipe(map((res) => {
-        return plainToClass(Contact2, res, { excludeExtraneousValues: true });
-      }));
+    return this._dataSrc.getAll("api/contacts");
+    // .pipe(map((res) => {
+    //   return plainToClass(Contact, res, { excludeExtraneousValues: true });
+    // }));
   }
 
   loadCustomerData() {
-    return this._dataSrc.getAll("api/customers")
-      .pipe(map((res) => {
-        return plainToClass(Contact2, res, { excludeExtraneousValues: true });
-      }));
+    return this._dataSrc.getAll("api/customers");
+    // .pipe(map((res) => {
+    //   return plainToClass(Customer, res, { excludeExtraneousValues: true });
+    // }));
   }
 
 }

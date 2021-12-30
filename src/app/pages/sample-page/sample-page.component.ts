@@ -5,6 +5,7 @@ import { AppDataService } from '../../app-data/app-data.service';
 import { IDataTablePageChangeEvent } from '../../lib/utils/interfaces';
 import { formSubmitType, IDataModel, IDataTable } from '../../lib/utils/utils.index';
 import { sampleRequestModel } from '../model/requestModel';
+import { Contact } from '../model/responseModel';
 @Component({
   selector: 'app-sample-page',
   templateUrl: './sample-page.component.html',
@@ -36,7 +37,7 @@ export class SamplePageComponent implements OnInit {
   ngOnInit(): void {
 
     this.initVariables();
-    this._dataSvc.loadContactData().subscribe((res: any) => {
+    this._dataSvc.loadContactData().subscribe((res: Contact) => {
       this.generateTableSource(res);
 
     });

@@ -61,7 +61,6 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
 
   constructor() { }
   ngOnInit(): void {
-    console.log('datatable component init.');
   }
   ngOnChanges() {
     this.initDataTable();
@@ -172,10 +171,8 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
       this.selectedRowData.toggle(rowData);
       if (this.selectedRowData.selected) {
         this.onRowSelected.emit(rowData);
-        console.log('selected row: ' + JSON.stringify(rowData));
       } else {
         this.onRowUnselected.emit(rowData);
-        console.log('unselected row: ' + JSON.stringify(rowData));
       }
     }
   }
@@ -189,14 +186,10 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
       pageSize: event.pageSize
     };
     this.onLoadPage.emit(pageData);
-    console.log('onPageChanged from template:' + event);
   }
 
   onViewDetail(field: string, rowData: any) {
     this.onFieldClicked.emit({ field: field, rowData: rowData });
-    console.log(
-      'selected field: ' + field + ' rowData: ' + JSON.stringify(rowData)
-    );
   }
   onViewExpandedContent(rowData: any) {
     this.expandedElement = this.expandedElement === rowData ? null : rowData;

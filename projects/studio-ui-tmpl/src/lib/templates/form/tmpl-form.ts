@@ -90,8 +90,6 @@ export class TmplFormComponent implements OnChanges, OnInit {
 
   formSubmit(): void {
     var formValue = this._localDataForm.value;
-
-    console.log('Saved in template: ' + JSON.stringify(formValue));
     if (!this._localDataForm.valid) return;
 
     this.onFormSubmit.emit(formValue);

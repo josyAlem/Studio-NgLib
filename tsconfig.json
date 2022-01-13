@@ -19,10 +19,6 @@
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
     "paths": {
-      "studio-auth": [
-        "dist/studio-auth/studio-auth",
-        "dist/studio-auth"
-      ],
       "studio-ui-tmpl": [
         "dist/studio-ui-tmpl/studio-ui-tmpl",
         "dist/studio-ui-tmpl"

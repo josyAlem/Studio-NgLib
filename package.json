@@ -1,12 +1,12 @@
 {
-  "name": "sutdio-ng-lib",
+  "name": "sutdio-ng-library",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng s -o",
     "build": "ng build",
-    "build:studio-auth": "ng build studio-auth --configuration production",
     "build:studio-ui-tmpl": "ng build studio-ui-tmpl --configuration production",
+    "pub:studio-ui-tmpl": "cd dist/studio-ui-tmpl && npm publish --access public",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

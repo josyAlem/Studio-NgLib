@@ -22,7 +22,8 @@
       "studio-ui-tmpl": [
         "dist/studio-ui-tmpl/studio-ui-tmpl",
         "dist/studio-ui-tmpl"
-      ]
+      ],
+      "@studioUiTmplPath/*":["./projects/studio-ui-tmpl/src/lib/*"]
     },
     "target": "es2017",
     "module": "es2020",

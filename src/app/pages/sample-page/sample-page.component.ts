@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { formSubmitType, IDataModel, IDataTable, IDataTablePageChangeEvent } from '@studioUiTmplPath/utils/utils.index';
 import { plainToClass } from 'class-transformer';
 import * as _ from 'underscore';
 import { AppDataService } from '../../app-data/app-data.service';
-import { IDataTablePageChangeEvent } from '../../lib/utils/interfaces';
-import { formSubmitType, IDataModel, IDataTable } from '../../lib/utils/utils.index';
 import { sampleRequestModel } from '../model/requestModel';
 import { Contact } from '../model/responseModel';
 @Component({

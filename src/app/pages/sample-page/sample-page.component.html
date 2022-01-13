@@ -1,0 +1,19 @@
+<h2 class="page-header">Sample Page</h2>
+<p class="errorDisplay">{{ errMsg }}</p>
+<div class="form-container">
+  <studio-ui-tmpl-form
+    [formData]="formData"
+    [formSubmitType]="formSubmitType"
+    [dataModel]="dataModel"
+    [submitFormTitle]="submitFormTitle"
+    (onFormSubmit)="submitForm($event)"
+  ></studio-ui-tmpl-form>
+</div>
+
+<div class="grid-container" *ngIf="localDataSource.columns.length > 0">
+  <studio-ui-tmpl-grid
+    [inputDataSource]="dataSource"
+    (onLoadPage)="loadPage($event)"
+  >
+  </studio-ui-tmpl-grid>
+</div>

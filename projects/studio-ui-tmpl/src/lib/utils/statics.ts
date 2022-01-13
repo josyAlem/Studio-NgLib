@@ -1,4 +1,3 @@
-'use strict';
 
 import * as interfaces from "./interfaces";
 
@@ -19,9 +18,7 @@ export let PageOptions = {
 };
 export let FormCtrlType = {
   INPUT: 'input',
-  CHECKBOX: 'checkbox',
   TEXTAREA: 'textarea',
-  DATEPICKER: 'datepicker',
   SELECT: 'select',
   LOCATION: 'location'
 };

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StudioAuthComponent } from './studio-auth.component';
+import { SamplePageComponent } from './sample-page.component';
 
-describe('StudioAuthComponent', () => {
-  let component: StudioAuthComponent;
-  let fixture: ComponentFixture<StudioAuthComponent>;
+describe('SamplePageComponent', () => {
+  let component: SamplePageComponent;
+  let fixture: ComponentFixture<SamplePageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StudioAuthComponent ]
+      declarations: [ SamplePageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StudioAuthComponent);
+    fixture = TestBed.createComponent(SamplePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

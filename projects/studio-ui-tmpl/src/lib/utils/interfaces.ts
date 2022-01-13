@@ -1,4 +1,4 @@
-import { MatTableDataSource } from "@angular/material/table";
+import { FormCtrlType } from './statics';
 
 export interface INavigationObject {
   id: string,
@@ -12,12 +12,14 @@ export interface INavigationObject {
 export interface IDataModelField {
   name: string,
   label: string,
-  controlType: string,
-  dataType: string,
-  type: string,
+  controlType: typeof FormCtrlType,
+  dataType: "number" | "string" | "date" | "boolean",
+  type: "number" | "email" | "date" | "text" | "checkbox" | "password",
+  isRequired?: boolean
   formView: boolean,
   disabled?: boolean,
-  width?: string
+  width?: string,
+  placeholder?: string
 }
 export interface IDataModelColumn {
   field: string,
@@ -33,7 +35,9 @@ export interface IDataModelValidator {
 export interface IDataModel {
   fields: IDataModelField[],
   columns: IDataModelColumn[],
-  validators?: IDataModelValidator[]
+  validators?: IDataModelValidator[],
+  formSize: string,
+  isCenteredForm: boolean
 }
 export interface IContextMenu {
   id?: string,
@@ -44,7 +48,7 @@ export interface IContextMenu {
 }
 export interface IDataTable {
   tableCaption?: string,
-  rows: MatTableDataSource<any>,
+  rows: any[],
   columns: IDataModelColumn[],
   selectableRows?: boolean,
   expandContent?: string,
@@ -55,4 +59,11 @@ export interface IDataTable {
   pageSize?: number,
   totalRecords?: number
 
+}
+
+export interface IDataTablePageChangeEvent {
+  previousPageIndex: number,
+  pageIndex: number,
+  pageSize: number,
+  length: number
 }

@@ -6,17 +6,13 @@ import {
   trigger
 } from '@angular/animations';
 import { SelectionModel } from '@angular/cdk/collections';
-import {
-  Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import {
-  MatSort,
-  MatSortable, Sort
-} from '@angular/material/sort';
+import { MatSort, MatSortable, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'underscore';
 import * as interfaces from '../../utils/interfaces';
+
 
 @Component({
   selector: 'studio-ui-tmpl-grid',
@@ -34,37 +30,37 @@ import * as interfaces from '../../utils/interfaces';
   ],
 })
 export class TmplDataGridComponent implements OnChanges, OnInit {
+  @Output() onLoadPage: EventEmitter<interfaces.IDataTablePageChangeEvent> = new EventEmitter();
   @Output() onRowSelected: EventEmitter<any> = new EventEmitter();
   @Output() onRowUnselected: EventEmitter<any> = new EventEmitter();
   @Output() onFieldClicked: EventEmitter<any> = new EventEmitter();
-  selectedRowData!: SelectionModel<any>;
-  showSearchRow: boolean = false;
+
   localDataTable: interfaces.IDataTable = {
     tableCaption: 'Sample Data Table',
-    rows: new MatTableDataSource<any>(),
+    rows: [],
     columns: [],
     selectableRows: true,
     expandContent: '',
     contextMenu: [],
-    showPaginator: true,
+    showPaginator: false,
+    showFilter: false,
     pageSizeOptions: [5, 10, 20, 50, 100],
     pageSize: 10,
     totalRecords: 0,
   };
   @Input() inputDataSource: interfaces.IDataTable = this.localDataTable;
 
+  selectedRowData!: SelectionModel<any>;
   expandedElement!: null;
   isLoadingResults: boolean = false;
-  showFilter?: boolean = false;
   tableColHeaders!: string[];
-  showPaginator?: boolean = false;
+  gridRows: MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort = new MatSort();
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
   constructor() { }
   ngOnInit(): void {
-    console.log('datatable component init.');
   }
   ngOnChanges() {
     this.initDataTable();
@@ -114,10 +110,11 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
 
     this.tableColHeaders = _.pluck(modifiedColHeaders, 'header');
     this.localDataTable = this.inputDataSource;
-    this.showPaginator = this.inputDataSource.showPaginator;
-    this.showFilter = this.inputDataSource.showFilter;
+    //this.showPaginator = this.inputDataSource.showPaginator;
+    //this.showFilter = this.inputDataSource.showFilter;
+    this.inputDataSource.rows.forEach(c => this.gridRows.data.push(c));
 
-    this.localDataTable.rows.sort = this.sort;
+    this.gridRows.sort = this.sort;
     if (this.localDataTable.showPaginator) {
       if (this.localDataTable.pageSizeOptions == null || [])
         this.localDataTable.pageSizeOptions = [
@@ -125,31 +122,32 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
         ];
       if (this.localDataTable.totalRecords == null)
         this.localDataTable.totalRecords =
-          this.localDataTable.rows.data.length;
+          this.gridRows.data.length;
       if (this.localDataTable.pageSize == null)
         this.localDataTable.pageSize = 5;
 
-      this.localDataTable.rows.paginator = this.paginator;
+      this.gridRows.paginator = this.paginator;
 
     }
   }
 
   sortData(event: Sort) {
-    this.localDataTable.rows.sort?.sort({
+    this.gridRows.sort?.sort({
       id: event.active,
       start: event.direction,
     } as MatSortable);
   }
 
-  applyFilter(event: Event) {
+  filterData(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.localDataTable.rows.filter = filterValue.trim().toLowerCase();
+    this.gridRows.filter = filterValue;
   }
 
+  //#region Selctable Rows
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selectedRowData.selected.length;
-    const numRows = this.localDataTable.rows.data.length;
+    const numRows = this.gridRows.data.length;
     return numSelected === numRows;
   }
 
@@ -157,7 +155,7 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
   masterToggle() {
     this.isAllSelected()
       ? this.selectedRowData.clear()
-      : this.localDataTable.rows.data.forEach((row) =>
+      : this.gridRows.data.forEach((row) =>
         this.selectedRowData.select(row)
       );
   }
@@ -173,22 +171,25 @@ export class TmplDataGridComponent implements OnChanges, OnInit {
       this.selectedRowData.toggle(rowData);
       if (this.selectedRowData.selected) {
         this.onRowSelected.emit(rowData);
-        console.log('selected row: ' + JSON.stringify(rowData));
       } else {
         this.onRowUnselected.emit(rowData);
-        console.log('unselected row: ' + JSON.stringify(rowData));
       }
     }
   }
+  //#endregion
+
   onPageChanged(event: any) {
-    console.log(event);
+    let pageData: interfaces.IDataTablePageChangeEvent = {
+      previousPageIndex: event.previousPageIndex,
+      length: event.length,
+      pageIndex: event.pageIndex,
+      pageSize: event.pageSize
+    };
+    this.onLoadPage.emit(pageData);
   }
 
   onViewDetail(field: string, rowData: any) {
     this.onFieldClicked.emit({ field: field, rowData: rowData });
-    console.log(
-      'selected field: ' + field + ' rowData: ' + JSON.stringify(rowData)
-    );
   }
   onViewExpandedContent(rowData: any) {
     this.expandedElement = this.expandedElement === rowData ? null : rowData;

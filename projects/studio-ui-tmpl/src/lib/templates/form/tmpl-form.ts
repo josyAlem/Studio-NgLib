@@ -17,14 +17,14 @@ import * as sharedStatics from '../../utils/statics';
 })
 export class TmplFormComponent implements OnChanges, OnInit {
   constructor() { }
-  @Output() submitForm: EventEmitter<JSON> = new EventEmitter<JSON>();
+  @Output() onFormSubmit: EventEmitter<JSON> = new EventEmitter<JSON>();
   @Input() formData: any;
   @Input() formSubmitType!: sharedEnums.formSubmitType;
   @Input() dataModel!: interfaces.IDataModel;
   @Input() submitFormTitle!: string;
 
   _submitFormTitle: string = 'SAVE';
-  _errMessage: string = '';
+  _validationMsg: string = '';
   _localDataForm!: FormGroup;
   _localDataModel!: interfaces.IDataModel;
 
@@ -81,10 +81,8 @@ export class TmplFormComponent implements OnChanges, OnInit {
   }
   setFormCtrlDefaultValue(fld: interfaces.IDataModelField): any {
     switch (fld.dataType) {
-      case 'bool':
-        return true;
-      case 'select':
-        return null;
+      case 'boolean':
+        return false;
       default:
         return null;
     }
@@ -92,11 +90,9 @@ export class TmplFormComponent implements OnChanges, OnInit {
 
   formSubmit(): void {
     var formValue = this._localDataForm.value;
-
-    console.log('Saved in template: ' + JSON.stringify(formValue));
     if (!this._localDataForm.valid) return;
 
-    this.submitForm.emit(formValue);
+    this.onFormSubmit.emit(formValue);
   }
 
   filterFormField(field: interfaces.IDataModelField) {
@@ -104,7 +100,6 @@ export class TmplFormComponent implements OnChanges, OnInit {
   }
 
   validateForm(fieldName: string): boolean {
-    var INVALID = false;
     if (
       this._localDataForm.get(fieldName) &&
       (this._localDataForm.get(fieldName)?.touched ||
@@ -113,34 +108,33 @@ export class TmplFormComponent implements OnChanges, OnInit {
     ) {
       var error: ValidationErrors | null | undefined =
         this._localDataForm.get(fieldName)?.errors;
-      if (error) INVALID = this.getErrorMessage(error);
+      if (error) {
+        this._validationMsg = this.getErrorMessage(error);
+        return true;
+      }
     }
-    return INVALID;
+    return false;
   }
 
-  getErrorMessage(error: ValidationErrors | null | undefined): boolean {
-    this._errMessage = "";
-    if (error == null)
-      return true;
+  getErrorMessage(error: ValidationErrors): string {
+    let errMessage: string = "";
 
     if (error['required']) {
-      this._errMessage = "*Required!";
+      errMessage = "*Required!";
     }
     else if (error['pattern'])
-      this._errMessage = "*Invalid format!";
+      errMessage = "*Invalid format!";
 
     else if (error['email']) {
-      this._errMessage = "*Invalid format!(Sample: john@gmail.com)";
+      errMessage = "*Invalid format!(Sample: john@gmail.com)";
     }
     else if (error['minlength']) {
-      this._errMessage = "*Minimum length allowed is " + error['minlength'].requiredLength + " !";
+      errMessage = "*Minimum length allowed is " + error['minlength'].requiredLength + " !";
     }
     else if (error['numRange']) {
-      this._errMessage = error['numRange'].message;
+      errMessage = error['numRange'].message;
     }
-    else
-      return false;
-
-    return true;
+    else { errMessage = JSON.stringify(error); }
+    return errMessage;
   }
 }

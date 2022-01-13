@@ -1,5 +1,5 @@
 import { Validators } from '@angular/forms';
-import { FormCtrlType, IDataModel, IDataModelColumn, IDataModelField, IDataModelValidator } from '../../lib/utils/utils.index';
+import { FormCtrlType, IDataModel, IDataModelColumn, IDataModelField, IDataModelValidator } from '@studioUiTmplPath/utils/utils.index';
 export class sampleRequestModel {
   constructor(
     public name: string = "",

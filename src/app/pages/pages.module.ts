@@ -3,8 +3,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/cor
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { StudioUiTmplModule } from "@studioUiTmplPath/studio-ui-tmpl.module";
 import { AngularMaterialModule } from "../angular-material.module";
-import { StudioUiTmplModule } from "../lib/studio-ui-tmpl.module";
 import { SamplePageComponent } from './sample-page/sample-page.component';
 
 @NgModule({

@@ -1,0 +1,55 @@
+<div
+  class="container {{_localDataModel.isCenteredForm? 'container-center':''}}"
+  style="max-width:{{_localDataModel.formSize}}"
+>
+  <form
+    novalidate="novalidate"
+    [formGroup]="_localDataForm"
+    class="form-container"
+  >
+    <div
+      *ngFor="let field of _localDataModel.fields| studioUiFilterPipe:filterFormField"
+    >
+      <div *ngIf="field.controlType==sharedFormCtrlType.INPUT">
+        <div class="field-container">
+          <div class="field-label">
+            <label for="{{field.name}}"
+              >{{field.label}}{{field.isRequired?'*':''}}</label
+            >
+          </div>
+          <div class="field-control">
+            <input
+              type="{{field.type}}"
+              formControlName="{{field.name}}"
+              placeholder="{{field.placeholder}}"
+            />
+          </div>
+        </div>
+      </div>
+      <div *ngIf="field.controlType==sharedFormCtrlType.TEXTAREA">
+        <div class="field-container">
+          <div class="field-label">
+            <label for="{{field.name}}">{{field.label}}</label>
+          </div>
+          <div class="field-control">
+            <textarea
+              formControlName="{{field.name}}"
+              rows="3"
+              placeholder="{{field.placeholder}}"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="error-block" *ngIf="validateForm(field.name)">
+          {{_validationMsg}}
+        </span>
+      </div>
+    </div>
+  </form>
+  <div class="form-button">
+    <button (click)="formSubmit()" [disabled]="!_localDataForm.valid">
+      {{_submitFormTitle}}
+    </button>
+  </div>
+</div>

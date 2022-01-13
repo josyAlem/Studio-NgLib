@@ -26,11 +26,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -94,35 +92,30 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         }
       }
     },
-    "shared": {
+    "studio-ui-tmpl": {
       "projectType": "library",
-      "root": "projects/shared",
-      "sourceRoot": "projects/shared/src",
-      "prefix": "lib",
+      "root": "projects/studio-ui-tmpl",
+      "sourceRoot": "projects/studio-ui-tmpl/src",
+      "prefix": "StudioUi",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/shared/ng-package.json"
+            "project": "projects/studio-ui-tmpl/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/shared/tsconfig.lib.prod.json"
+              "tsConfig": "projects/studio-ui-tmpl/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/shared/tsconfig.lib.json"
+              "tsConfig": "projects/studio-ui-tmpl/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -130,9 +123,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/shared/src/test.ts",
-            "tsConfig": "projects/shared/tsconfig.spec.json",
-            "karmaConfig": "projects/shared/karma.conf.js"
+            "main": "projects/studio-ui-tmpl/src/test.ts",
+            "tsConfig": "projects/studio-ui-tmpl/tsconfig.spec.json",
+            "karmaConfig": "projects/studio-ui-tmpl/karma.conf.js"
           }
         }
       }
